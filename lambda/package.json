@@ -4,23 +4,18 @@
   "description": "An unofficial Google skill for Alexa",
   "main": "index.js",
   "dependencies": {
-    "@grpc/grpc-js": "^1.0.3",
-    "@grpc/proto-loader": "^0.5.4",
+    "@grpc/grpc-js": "^1.2.3",
+    "@grpc/proto-loader": "^0.5.5",
+    "@suldashi/lame": "^1.2.5",
     "alexa-sdk": "^1.0.25",
-    "aws-sdk": "^2.678.0",
-    "google-proto-files": "^2.0.0",
-    "googleapis": "^51.0.0",
-    "lame": "^1.2.4",
+    "google-proto-files": "^2.4.0",
+    "googleapis": "^67.0.0",
     "pcm-volume": "^1.0.0",
     "request": "^2.88.2",
     "stream": "^0.0.2",
     "xml-escape": "^1.1.0"
   },
-  "devDependencies": {
-    "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^14.0.1",
-    "aws-sdk": "^2.678.0"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "npx prettier --write index.js"

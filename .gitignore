@@ -1,24 +1,2 @@
-# ignore certificates
-*.pem
-*.crt
-*.csr
-*.key
-*.p7b
-
-*.gz
-
-# ignore .env
-.env
-**/.env
-
-# logs
-**.log
-**/logs/
-.project/
-.idea/
-
-# temp office files
-.~lock*
-
+.ask/
 node_modules/
-**/node_modules/*

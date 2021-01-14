@@ -10,7 +10,7 @@ const Volume = require('pcm-volume');
 
 const fs = require('fs');
 const grpc = require('@grpc/grpc-js');
-const lame = require('lame');
+const lame = require('@suldashi/lame');
 const request = require('request');
 const xmlescape = require('xml-escape');
 const protoLoader = require('@grpc/proto-loader');
@@ -20,8 +20,10 @@ const s3 = new AWS.S3();
 
 // Get Google Credentials from Environment Variables - these are set in the Lambda function configuration
 
-const S3_BUCKET = process.env.S3_BUCKET;
 const API_ENDPOINT = process.env.API_ENDPOINT;
+const APP_ID = process.env.SKILL_ID;
+const S3_BUCKET = process.env.S3_BUCKET;
+const TABLE_NAME = process.env.TABLE_NAME;
 
 const protoDefinition = protoLoader.loadSync('google/assistant/embedded/v1alpha2/embedded_assistant.proto', {
     includeDirs: [getProtoPath('..')],
@@ -44,7 +46,12 @@ const clientState = {
     deviceLocation: undefined,
 };
 
-const SUPPORTED_LOCALES = ['en-GB', 'de-DE', 'en-AU', 'en-CA', 'en-IN', 'ja-JP'];
+// Supported locales
+//  https://developers.google.com/assistant/sdk/reference/rpc/languages
+const SUPPORTED_LOCALES = [
+  'de-DE', 'en-AU', 'en-CA', 'en-GB', 'en-IN', 'en-US', 'es-ES', 'es-MX',
+  'fr-CA', 'fr-FR', 'it-IT', 'ja-JP', 'ko-KR', 'pt-BR'
+];
 
 function getSecretParams() {
     const s3Params = {
@@ -60,14 +67,14 @@ function getSecretParams() {
                 return reject(new Error('I could not load the client secret file from S3.'));
             }
 
-            console.log('Current ConfigJSON: ' + JSON.stringify(clientState.s3Config));
+            console.log('Current ConfigJSON:', JSON.stringify(clientState.s3Config));
             const s3Config = JSON.parse(Buffer.from(data.Body).toString('utf8'));
 
             if (!s3Config.hasOwnProperty('web')) {
                 return reject(new Error('The client secret file was not configured for a web based client.'));
             }
 
-            console.log('S3 Config is loaded: ' + JSON.stringify(s3Config));
+            console.log('S3 Config is loaded:', JSON.stringify(s3Config));
 
             const clientId = s3Config.web.client_id;
             const redirectUri = s3Config.web.redirect_uris[0];
@@ -105,7 +112,7 @@ async function registerProject(scope$) {
     // This isn't massively efficient code but it only needs to run once!
     const ACCESS_TOKEN = scope$.event.context.System.user.accessToken;
 
-    console.log('Access Token: ' + ACCESS_TOKEN);
+    console.log('Access Token:', ACCESS_TOKEN);
 
     // Authenticate against Google OAUTH2
     clientState.oauth2Client.setCredentials({ access_token: ACCESS_TOKEN });
@@ -204,7 +211,7 @@ async function registerProject(scope$) {
                 console.log('Got Model register error', err);
                 return reject(new Error('There was an error registering the Model with the Google API.'));
             } else if (result) {
-                console.log('Got positive model response' + JSON.stringify(result));
+                console.log('Got positive model response:', JSON.stringify(result));
                 registerInstance(function (err, result) {
                     if (err) {
                         console.log('Error:', err);
@@ -250,7 +257,7 @@ function executeAssist(token, audioState, scope$) {
     let overrideLocale = 'en-US';
     let conversationState = Buffer.alloc(0);
 
-    console.log('Locale is: ' + clientState.locale);
+    console.log('Locale is:', clientState.locale);
 
     if (SUPPORTED_LOCALES.includes(clientState.locale)) {
         overrideLocale = clientState.locale;
@@ -282,7 +289,7 @@ function executeAssist(token, audioState, scope$) {
         const stats = fs.statSync('/tmp/response.pcm');
         const fileSizeInBytes = stats.size;
 
-        console.log('files size is ' + fileSizeInBytes);
+        console.log('files size is', fileSizeInBytes);
 
         // Check whether response file has any content. If it doesn't then we have a response with no audio
         if (fileSizeInBytes > 0) {
@@ -328,8 +335,8 @@ function executeAssist(token, audioState, scope$) {
         console.log('No prior ConverseResponse');
     }
 
-    console.log('Current ConversationState is ', conversationState);
-    console.log('AssistRequest is ', assistRequest);
+    console.log('Current ConversationState is', conversationState);
+    console.log('AssistRequest:', JSON.stringify(assistRequest));
 
     const conversation = assistant.Assist();
 
@@ -349,7 +356,7 @@ function executeAssist(token, audioState, scope$) {
     });
 
     conversation.on('data', function (response) {
-        console.log('AssistResponse is: ' + JSON.stringify(response));
+        console.log('AssistResponse:', JSON.stringify(response));
 
         // Check there is actually a value in result
         if (response.dialog_state_out) {
@@ -357,7 +364,7 @@ function executeAssist(token, audioState, scope$) {
 
             if (response.dialog_state_out.supplemental_display_text) {
                 audioState.googleResponseText += xmlescape(JSON.stringify(response.dialog_state_out.supplemental_display_text));
-                console.log('Supplemental text is: ' + audioState.googleResponseText);
+                console.log('Supplemental text is:', audioState.googleResponseText);
             }
 
             if (response.dialog_state_out.microphone_mode) {
@@ -376,7 +383,7 @@ function executeAssist(token, audioState, scope$) {
                 if (response.dialog_state_out.conversation_state.length > 0) {
                     console.log('Conversation state changed');
                     conversationState = response.dialog_state_out.conversation_state;
-                    console.log('Conversation state var is: ' + conversationState);
+                    console.log('Conversation state var is', conversationState);
                     scope$.attributes['CONVERSATION_STATE'] = conversationState.toString();
                 }
             }
@@ -462,7 +469,7 @@ function executeEncode(audioState, scope$) {
 
         s3.upload(params, function (err, data) {
             if (err) {
-                console.log('S3 upload error: ' + err);
+                console.log('S3 upload error:', err);
                 scope$.emit(':tell', 'There was an error uploading to S3. ');
             } else {
                 // Upload has been successful - we can know issue an alexa response based upon microphone state
@@ -605,13 +612,13 @@ const handlers = {
         // Have we received an direct utterance from another intent?
         if (overrideText) {
             audioState.alexaUtteranceText = overrideText;
-            console.log('Utterance received from another intent: ' + overrideText);
+            console.log('Utterance received from another intent:', overrideText);
         } else {
             // use detected utterance
             audioState.alexaUtteranceText = scope$.event.request.intent.slots.search.value;
         }
 
-        console.log('Input text to be processed is "' + audioState.alexaUtteranceText + '"');
+        console.log(`Input text to be processed is "${audioState.alexaUtteranceText}"`);
         console.log('Starting Search Intent');
 
         const accessToken = scope$.event.context.System.user.accessToken;
@@ -638,7 +645,7 @@ const handlers = {
                 }
             }
 
-            console.log('token: ' + accessToken);
+            console.log('token:', accessToken);
             executeAssist(accessToken, audioState, this);
         }
     },
@@ -694,7 +701,8 @@ const handlers = {
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context);
     clientState.locale = event.request.locale;
+    alexa.appId = APP_ID;
+    alexa.dynamoDBTableName = TABLE_NAME;
     alexa.registerHandlers(handlers);
-    alexa.dynamoDBTableName = 'AlexaAssistantSkillSettings';
     alexa.execute();
 };

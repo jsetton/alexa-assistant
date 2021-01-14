@@ -7,27 +7,69 @@ Implementation of the Google Assistant API for Alexa
 You can download the ZIP file from the [Releases](https://github.com/rokmohar/alexa-assistant/releases)
 page and upload them to the AWS Lambda function from the AWS console.
 
-# Build and Deploy
+# Deployment Steps
 
-Run the following commands:
+0. Prerequisites
 
-- `docker build -t mylambda .`
+    * To deploy this skill, you will need the following tools:
+        * [ASK CLI](https://developer.amazon.com/en-US/docs/alexa/smapi/quick-start-alexa-skills-kit-command-line-interface.html)
+        * [Docker](https://docs.docker.com/get-docker/)
+        * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) (Optional)
 
-- `docker run --rm -e AWS_ACCESS_KEY_ID="" -e AWS_SECRET_ACCESS_KEY="" mylambda`
+    * If your default language isn't English (US):
+        * Configure your [AWS region](https://developer.amazon.com/en-US/docs/alexa/smarthome/develop-smart-home-skills-in-multiple-languages.html#deploy) to deploy to in `ask-resources.json`.
+        * Add your specific skill locale:
+        ```
+        $ ask skill add-locales
+        ? Please select at least one locale to add: en-GB
 
-You must set values of `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` variables in the command.
-You can get the access key ID and secret access key in IAM section of the AWS console.
-Make sure that your IAM user has role AWSLambdaFullAccess.
+        The following skill locale(s) have been added according to your local project:
+          Added locale en-GB.json from en-US's interactionModel
+        Please check the added files above, and run "ask deploy" to deploy the changes.
+        ```
 
-You can override the AWS Lambda function name by adding `-e AWS_LAMBDA_FUNCTION_NAME=""` to the docker run command.
+    * Configure your Google Assistant API `clientId` and `clientSecret` in `skill-package/accountLinking.json`
 
-You can copy `.env.example` to `.env` and add the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` there.
-Then you can run the command following command instead:
+1. Deploy the skill and the lambda function in one step:
+    ```
+    $ ask deploy
+    Deploy configuration loaded from ask-resources.json
+    Deploy project for profile [default]
 
-- `docker run --rm --env-file .env mylambda`
+    ==================== Deploy Skill Metadata ====================
+    Skill package deployed successfully.
+    Skill ID: <skillId>
 
-Complete documentation for AWS Lambda Docker images can be found here:
-https://hub.docker.com/r/lambci/lambda/
+    ==================== Build Skill Code ====================
+    Skill code built successfully.
+    Code for region default built to <fullPath>/.ask/lambda/build.zip successfully with build flow CustomBuildFlow.
+
+    ==================== Deploy Skill Infrastructure ====================
+    ✔ Deploy Alexa skill infrastructure for region "default"
+    The api endpoints of skill.json have been updated from the skill infrastructure deploy results.
+    Skill infrastructures deployed successfully through @ask-cli/cfn-deployer.
+
+    ==================== Enable Skill ====================
+    Skill is enabled successfully.
+    ```
+
+2. Setup skill account linking using the skill id displayed in previous step and your OAuth2 provider configuration:
+    ```
+    $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:skill-package/accountLinking.json
+
+    Command executed successfully!
+    ```
+
+3. Retrieve the S3 bucket name from `.ask/ask-states.json` and upload `client_secret.json` to it, directly via the [web console](https://s3.console.aws.amazon.com/s3/home) or using the AWS CLI:
+    ```
+    $ aws s3 cp client_secret.json s3://<bucketName>
+    upload: ./client_secret.json to s3://<bucketName>/client_secret.json
+    ```
+
+4. Enable skill with account linking:
+    * Go to your [Alexa skill console](https://alexa.amazon.com/spa/index.html#skills/your-skills/?ref-suffix=ysa_gw)
+    * Click on the "Google Assistant" skill under the "Dev Skills" tab
+    * Click "Enable" and go through the account linking process
 
 # Release 2.1
 
@@ -55,7 +97,7 @@ The skill software in this GitHub project is provided as open source so you are 
 
 I do however have to pay the costs of hosting the cloudformation templates and zip files on AWS S3. As such the instructions for deploying this skill and the CloudFormation template linked within are now held in a seperate [GitHub project](https://github.com/tartanguru/alexa-assistant-instructions) which is licenced under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-If you wish to reproduce the installation instructions hosted on your own website (**I really wish you wouldn't as it makes my life very difficult to support and update the skill**) then you may do so and link to my Cloudformation template (and consequently the zips on my S3 buckets)  provided that there is no monetisation on the page e.g. adverts. If you do wish to have monetisation then you will need to create your own instructions and host your own Cloudformation template and associated zip files. 
+If you wish to reproduce the installation instructions hosted on your own website (**I really wish you wouldn't as it makes my life very difficult to support and update the skill**) then you may do so and link to my Cloudformation template (and consequently the zips on my S3 buckets)  provided that there is no monetisation on the page e.g. adverts. If you do wish to have monetisation then you will need to create your own instructions and host your own Cloudformation template and associated zip files.
 
 I AM VERY SERIOUS ABOUT THIS POINT - I WILL BE CHECKING FREQUENTLY AND WILL CHANGE OR REMOVE THE CLOUDFORMATION TEMPLATE URL IF PEOPLE ARE ABUSING IT
 
@@ -67,11 +109,11 @@ If you already have the original version of the skill which was installed manual
 
 [Upgrade Instructions](https://github.com/tartanguru/alexa-assistant-instructions/blob/master/upgrade.md)
 
-# New Installation via CloudFormation 
+# New Installation via CloudFormation
 
 This is the easiest method as it creates the lambda function automatically for you.
 
-NOTE - PLEASE ONLY USE THE CLOUDFORMATION TEMPLATE URL PROVIDED IN THE INSTRUCTIONS ON THIS GITHUB SITE OR PAUL HIBBERTS VIDEO. 
+NOTE - PLEASE ONLY USE THE CLOUDFORMATION TEMPLATE URL PROVIDED IN THE INSTRUCTIONS ON THIS GITHUB SITE OR PAUL HIBBERTS VIDEO.
 I CANNOT GUARANTEE THE SAFETY OF URLS GIVEN ON OTHER SITES
 
 If you have not installed the skill before then follow the instructions here:-
@@ -111,9 +153,3 @@ If you are in the US then feel free to donate to the National Pancreatice Cancer
 http://www.npcf.us/donate/
 
 If you live elsewhere in the world then please donate a local cancer charity
-
-
-
-
-
-

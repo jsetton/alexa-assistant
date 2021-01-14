@@ -1,0 +1,38 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant API for Alexa",
+          "description": "Google Assistant API for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask google what time is it?",
+            "Alexa, ask google who is the queen?",
+            "Alexa, ask google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        }
+      },
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
+      "distributionMode": "PRIVATE",
+      "category": "ORGANIZERS_AND_ASSISTANTS"
+    },
+    "apis": {
+      "custom": {
+        "interfaces": [
+          {
+            "type": "RENDER_TEMPLATE"
+          }
+        ]
+      }
+    }
+  }
+}
