@@ -1,5 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
+  GoogleAssistantApiEndpoint:
+    Default: embeddedassistant.googleapis.com
+    Type: String
+  GoogleMapsApiKey:
+    Type: String
+  GoogleProjectId:
+    Type: String
   SkillId:
     Type: String
   LambdaFunctionName:
@@ -9,6 +16,10 @@ Parameters:
     Type: String
   LambdaHandler:
     Type: String
+  LambdaDebug:
+    Default: false
+    Type: String
+    AllowedValues: [true, false]
   CodeBucket:
     Type: String
   CodeKey:
@@ -82,7 +93,10 @@ Resources:
       Timeout: 10
       Environment:
         Variables:
-          API_ENDPOINT: embeddedassistant.googleapis.com
+          DEBUG: !Ref LambdaDebug
+          GOOGLE_ASSISTANT_API_ENDPOINT: !Ref GoogleAssistantApiEndpoint
+          GOOGLE_MAPS_API_KEY: !Ref GoogleMapsApiKey
+          GOOGLE_PROJECT_ID: !Ref GoogleProjectId
           S3_BUCKET: !Ref S3Bucket
           SKILL_ID: !Ref SkillId
           TABLE_NAME: !Ref DynamoDBTable
@@ -102,6 +116,3 @@ Outputs:
   SkillEndpoint:
     Description: LambdaARN for the regional endpoint
     Value: !GetAtt AlexaSkillFunction.Arn
-  S3Bucket:
-    Description: S3 bucket to upload client_secret.json to
-    Value: !Ref S3Bucket

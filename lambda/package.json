@@ -1,39 +1,54 @@
 {
   "name": "alexa-assistant",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "An unofficial Google skill for Alexa",
   "main": "index.js",
-  "dependencies": {
-    "@grpc/grpc-js": "^1.2.3",
-    "@grpc/proto-loader": "^0.5.5",
-    "@suldashi/lame": "^1.2.5",
-    "alexa-sdk": "^1.0.25",
-    "google-proto-files": "^2.4.0",
-    "googleapis": "^67.0.0",
-    "pcm-volume": "^1.0.0",
-    "request": "^2.88.2",
-    "stream": "^0.0.2",
-    "xml-escape": "^1.1.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "npx prettier --write index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tartanguru/alexa-assistant.git"
-  },
+  "author": "Ross Atkin",
+  "contributors": [
+    "Jeremy Setton"
+  ],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/tartanguru/alexa-assistant#readme",
   "keywords": [
     "alexa",
     "skill",
     "google",
     "assistant"
   ],
-  "author": "Ross Atkin",
-  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tartanguru/alexa-assistant.git"
+  },
   "bugs": {
     "url": "https://github.com/tartanguru/alexa-assistant/issues"
   },
-  "homepage": "https://github.com/tartanguru/alexa-assistant#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write *.js"
+  },
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.16",
+    "@grpc/grpc-js": "^1.2.3",
+    "@grpc/proto-loader": "^0.5.5",
+    "@suldashi/lame": "^1.2.5",
+    "ask-sdk-core": "^2.10.2",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.10.2",
+    "ask-sdk-model": "^1.35.1",
+    "aws-sdk": "^2.948.0",
+    "google-auth-library": "^7.3.0",
+    "google-proto-files": "^2.4.0",
+    "pcm-volume": "^1.0.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.2"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true
+  }
 }
