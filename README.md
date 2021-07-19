@@ -2,6 +2,22 @@
 
 Implementation of the Google Assistant API for Alexa
 
+# Release 3.0
+
+### THIS SKILL IS FOR PERSONAL USE ONLY AND IS NOT ENDORSED BY GOOGLE OR AMAZON. WHILST THIS SKILL USES AN OFFICIAL GOOGLE API, IT WILL NEVER PASS AMAZON CERTIFICATION DUE TO THE WAY THE RESPONSES ARE HOSTED.
+
+
+# What's New in this release
+
+* Supports node.js 12
+* Supports for ASK CLI deployment all-in-one skill and cloudformation stack with optional local building using docker
+* Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
+* Increased supported locales list
+* Replaced deprecated render template interface with simple cards display when text response available
+* No longer need to upload `client_secret.json` as replaced by Lambda environmental variables
+* Refactor code separating functionalities and upgrading to ASK SDK v2
+* Added automated build release via GitHub actions
+
 # Deployment Steps
 
 0. Prerequisites
@@ -47,7 +63,7 @@ Implementation of the Google Assistant API for Alexa
             ```
 
     * If upgrading from v2:
-        * Create ask hidden directory and states file adding the skill id listed under your [Alexa developer console](https://developer.amazon.com/alexa/console/ask). This will prevent duplicate skills from being created under your account.
+        * Create ask hidden directory and states file adding the Skill ID listed under your [Alexa developer console](https://developer.amazon.com/alexa/console/ask). This will prevent duplicate skills from being created under your account.
             ```
             $ cat .ask/ask-states.json
             {
@@ -84,30 +100,14 @@ Implementation of the Google Assistant API for Alexa
     Skill is enabled successfully.
     ```
 
-2. Setup skill account linking using the skill id displayed in previous step and your OAuth2 provider configuration:
+2. Update the skill account linking using the Skill ID displayed in previous step:
     ```
     $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:skill-package/accountLinking.json
 
     Command executed successfully!
     ```
 
-3. Enable skill with account linking:
+3. Enable the skill on your Alexa account:
     * Go to your [Alexa skill console](https://alexa.amazon.com/spa/index.html#skills/your-skills/?ref-suffix=ysa_gw)
     * Click on the "Google Assistant" skill under the "Dev Skills" tab
     * Click "Enable", activate the "Device Country and Postal Code" permission and go through the account linking process
-
-# Release 3.0
-
-### THIS SKILL IS FOR PERSONAL USE ONLY AND IS NOT ENDORSED BY GOOGLE OR AMAZON. WHILST THIS SKILL USES AN OFFICIAL GOOGLE API, IT WILL NEVER PASS AMAZON CERTIFICATION DUE TO THE WAY THE RESPONSES ARE HOSTED.
-
-
-# What's New in this release
-
-1. Supports node.js 12
-2. Supports for ask-cli deployment all-in-one skill and cloudformation stack with optional local building using docker
-3. Added support for device location converting Alexa skill device postal code/country to location coordinates using Google Maps Geocode API
-4. Increased supported locales list
-5. Replaced deprecated render template interface with simple cards display when text response available
-6. No longer need to upload `client_secret.json` as replaced by Lambda environmental variables
-7. Refactor code separating functionalities and upgrading to ask sdk v2
-8. Added automated build release via GitHub actions
