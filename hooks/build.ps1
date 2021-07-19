@@ -30,7 +30,7 @@ param(
 
 #----------------[ Declarations ]----------------------------------------------------
 $ErrorActionPreference = "Stop"
-$DockerBuildImage = "lambci/lambda:build-nodejs12.x"
+$DockerBuildImage = "amazon/aws-sam-cli-build-image-nodejs14.x"
 $LatestReleaseUrl="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 #----------------[ Functions ]----------------------------------------------------
