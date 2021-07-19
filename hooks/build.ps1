@@ -31,6 +31,7 @@ param(
 #----------------[ Declarations ]----------------------------------------------------
 $ErrorActionPreference = "Stop"
 $DockerBuildImage = "lambci/lambda:build-nodejs12.x"
+$LatestReleaseUrl="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 #----------------[ Functions ]----------------------------------------------------
 function Show-Log() {
@@ -70,6 +71,49 @@ function Show-Log() {
     end {}
 }
 
+function Check-Docker() {
+    <#
+        .SYNOPSIS
+            Function to check if docker is running.
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    begin {
+        Show-Log "Checking if docker is running."
+    }
+    process {
+        $CheckCmd = "docker version"
+        if ($Verbose) {
+            Invoke-Expression -Command $CheckCmd
+        } else {
+            Invoke-Expression -Command $CheckCmd 2>&1 | Out-Null
+        }
+        return $?
+    }
+    end {}
+}
+
+function Download-Latest-Release() {
+    <#
+        .SYNOPSIS
+            Function to download latest release package from GitHub.
+    #>
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+
+    begin {
+        Show-Log "Downloading latest release package from GitHub to $OutFile."
+    }
+    process {
+        Invoke-WebRequest -Uri "$LatestReleaseUrl" -OutFile "$OutFile"
+        return $?
+    }
+    end {}
+}
+
 function Install-Dependencies() {
     <#
         .SYNOPSIS
@@ -83,7 +127,7 @@ function Install-Dependencies() {
         Show-Log "Installing skill dependencies based on package.json."
     }
     process {
-        $DepCmd = "docker run --rm -v `"$pwd:/src`" -w /src $DockerBuildImage npm install --production"
+        $DepCmd = "docker run --rm -v `"$pwd:/src`" -w /src `"$DockerBuildImage`" npm install --production"
         if ($Verbose) {
             Invoke-Expression -Command $DepCmd
         } else {
@@ -120,14 +164,21 @@ Show-Log "###########################"
 Show-Log "####### Build Code ########"
 Show-Log "###########################"
 
-if (-Not (Install-Dependencies)) {
-    Show-Log "Failed to install the dependencies in the project" "Error"
-    exit 1
-}
+if (Check-Docker) {
+    if (-Not (Install-Dependencies)) {
+        Show-Log "Failed to install the dependencies in the project." "Error"
+        exit 1
+    }
 
-if (-Not (Compress-Dependencies)) {
-    Show-Log "Failed to zip the artifacts to $OutFile." "Error"
-    exit 1
+    if (-Not (Compress-Dependencies)) {
+        Show-Log "Failed to zip the artifacts to $OutFile." "Error"
+        exit 1
+    }
+} else {
+    if (-Not (Download-Latest-Release)) {
+        Show-Log "Failed to download latest release package to $OutFile." "Error"
+        exit 1
+    }
 }
 
 Show-Log "###########################"

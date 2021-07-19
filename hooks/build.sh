@@ -12,6 +12,7 @@ readonly OUT_FILE=${1:-"upload.zip"}
 readonly DO_DEBUG=${2:-false}
 
 readonly DOCKER_BUILD_IMAGE="lambci/lambda:build-nodejs12.x"
+readonly LATEST_RELEASE_URL="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 main() {
   if [[ $DO_DEBUG = true ]]; then
@@ -20,14 +21,21 @@ main() {
     echo "###########################"
   fi
 
-  if ! install_dependencies; then
-    display_stderr "Failed to install the dependencies in the project."
-    exit 1
-  fi
+  if check_docker; then
+    if ! install_dependencies; then
+      display_stderr "Failed to install the dependencies in the project."
+      exit 1
+    fi
 
-  if ! zip_node_modules; then
-    display_stderr "Failed to zip the artifacts to ${OUT_FILE}."
-    exit 1
+    if ! zip_node_modules; then
+      display_stderr "Failed to zip the artifacts to $OUT_FILE."
+      exit 1
+    fi
+  else
+    if ! download_latest_release; then
+      display_stderr "Failed to download latest release package to $OUT_FILE."
+      exit 1
+    fi
   fi
 
   if [[ $DO_DEBUG = true ]]; then
@@ -47,13 +55,35 @@ display_debug() {
   [[ $DO_DEBUG == true ]] && echo "[Debug] $1" >&2
 }
 
+check_docker() {
+  display_debug "Checking if docker is running."
+
+  if [[ $DO_DEBUG == true ]]; then
+    docker version
+  else
+    docker version > /dev/null 2>&1
+  fi
+  return $?
+}
+
+download_latest_release() {
+  display_debug "Downloading latest release package from GitHub to $OUT_FILE."
+
+  if [[ $DO_DEBUG == true ]]; then
+    wget -d -O "$OUT_FILE" "$LATEST_RELEASE_URL"
+  else
+    wget -q -O "$OUT_FILE" "$LATEST_RELEASE_URL"
+  fi
+  return $?
+}
+
 install_dependencies() {
   display_debug "Installing NodeJS dependencies based on the package.json."
 
   if [[ $DO_DEBUG == true ]]; then
-    docker run --rm -v "$PWD:/src" -w /src $DOCKER_BUILD_IMAGE npm ci --production
+    docker run --rm -v "$PWD:/src" -w /src "$DOCKER_BUILD_IMAGE" npm ci --production
   else
-    docker run --rm -v "$PWD:/src" -w /src $DOCKER_BUILD_IMAGE npm ci --production > /dev/null 2>&1
+    docker run --rm -v "$PWD:/src" -w /src "$DOCKER_BUILD_IMAGE" npm ci --production > /dev/null 2>&1
   fi
   return $?
 }
