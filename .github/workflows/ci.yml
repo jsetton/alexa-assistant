@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    tags: [ v*.*.* ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: lambci/lambda:build-nodejs12.x
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm ci --production
+      working-directory: lambda
+
+    - name: Package lambda source code
+      run: zip -r ../lambda.zip .
+      working-directory: lambda
+
+    - name: Create new release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: lambda.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
