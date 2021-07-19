@@ -1,7 +1,0 @@
-semi: true
-useTabs: false
-tabWidth: 4
-endOfLine: lf
-printWidth: 180
-singleQuote: true
-trailingComma: "es5"

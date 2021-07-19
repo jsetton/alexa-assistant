@@ -1,0 +1,19 @@
+{
+  "accountLinkingRequest": {
+    "skipOnEnablement": "false",
+    "type": "AUTH_CODE",
+    "authorizationUrl": "https://accounts.google.com/o/oauth2/auth?access_type=offline",
+    "clientId": "",
+    "clientSecret": "",
+    "accessTokenUrl": "https://oauth2.googleapis.com/token",
+    "accessTokenScheme": "HTTP_BASIC",
+    "scopes": [
+      "https://www.googleapis.com/auth/assistant-sdk-prototype",
+      "https://www.googleapis.com/auth/script.external_request"
+    ],
+    "domains": [
+      "google.com",
+      "googleapis.com"
+    ]
+  }
+}
