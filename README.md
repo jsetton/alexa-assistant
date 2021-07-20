@@ -10,7 +10,7 @@ Implementation of the Google Assistant API for Alexa
 # What's New in this release
 
 * Supports Node.js 14.x
-* Supports for ASK CLI deployment all-in-one skill and cloudformation stack with optional local building using docker
+* Supports for ASK CLI deployment all-in-one skill and CloudFormation stack with optional local building using docker
 * Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
 * Increased supported locales list
 * Replaced deprecated render template interface with simple cards display when text response available
@@ -31,10 +31,10 @@ Implementation of the Google Assistant API for Alexa
         * `https://pitangui.amazon.com/api/skill/link/<vendorId>`
         * `https://alexa.amazon.co.jp/api/skill/link/<vendorId>`
 
-    * Setup your Google environment by following the [Google-related](https://github.com/tartanguru/alexa-assistant-instructions/blob/master/fresh_install.md#enable-google-assistant-api-) installation instructions only, skipping all Amazon-related steps, and taking note of the [Project ID](https://console.cloud.google.com/cloud-resource-manager) that was created. Once completed, setup your Google Maps API key as follow:
+    * Setup your Google environment by following the [Google-related](https://github.com/tartanguru/alexa-assistant-instructions/blob/master/fresh_install.md#enable-google-assistant-api-) installation instructions only, skipping all Amazon-related steps, and taking note of the [Project ID](https://console.cloud.google.com/cloud-resource-manager) that was created. Once completed, create your Google Maps API key as follow:
         * Enable the [Google Maps Geocoding API](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com) under the same project.
         * Create a new [API key credential](https://console.cloud.google.com/apis/credentials) and edit it:
-            * Change name to `alexa_google_assistant`
+            * Change name to `google_assistant`
             * Leave application restrictions to none
             * Set API restrictions to the Geocoding API only.
 
@@ -100,7 +100,7 @@ Implementation of the Google Assistant API for Alexa
     Skill is enabled successfully.
     ```
 
-2. Update the skill account linking using the Skill ID displayed in previous step:
+2. Update the skill account linking information using the Skill ID displayed in previous step:
     ```
     $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:skill-package/accountLinking.json
 
