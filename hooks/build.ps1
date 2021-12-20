@@ -84,13 +84,13 @@ function Check-Docker() {
         Show-Log "Checking if docker is running."
     }
     process {
-        $CheckCmd = "docker version"
+        $CheckCmd = "docker version; `$Running=`$?"
         if ($Verbose) {
             Invoke-Expression -Command $CheckCmd
         } else {
             Invoke-Expression -Command $CheckCmd 2>&1 | Out-Null
         }
-        return $?
+        return $Running
     }
     end {}
 }
@@ -127,13 +127,13 @@ function Install-Dependencies() {
         Show-Log "Installing skill dependencies based on package.json."
     }
     process {
-        $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src `"$DockerBuildImage`" npm install --production"
+        $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src `"$DockerBuildImage`" npm install --production; `$Installed=`$?"
         if ($Verbose) {
             Invoke-Expression -Command $DepCmd
         } else {
             Invoke-Expression -Command $DepCmd 2>&1 | Out-Null
         }
-        return $?
+        return $Installed
     }
     end {}
 }
