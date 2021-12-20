@@ -31,7 +31,7 @@ param(
 #----------------[ Declarations ]----------------------------------------------------
 $ErrorActionPreference = "Stop"
 $DockerBuildImage = "amazon/aws-sam-cli-build-image-nodejs14.x"
-$LatestReleaseUrl="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
+$LatestReleaseUrl = "https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 #----------------[ Functions ]----------------------------------------------------
 function Show-Log() {
@@ -127,7 +127,7 @@ function Install-Dependencies() {
         Show-Log "Installing skill dependencies based on package.json."
     }
     process {
-        $DepCmd = "docker run --rm -v `"$pwd:/src`" -w /src `"$DockerBuildImage`" npm install --production"
+        $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src `"$DockerBuildImage`" npm install --production"
         if ($Verbose) {
             Invoke-Expression -Command $DepCmd
         } else {
