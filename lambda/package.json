@@ -1,6 +1,6 @@
 {
   "name": "alexa-assistant",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "An unofficial Google skill for Alexa",
   "main": "index.js",
   "author": "Ross Atkin",
