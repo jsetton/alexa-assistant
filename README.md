@@ -77,6 +77,12 @@ Implementation of the Google Assistant API for Alexa
             ```
         * Delete your existing `AlexaAssistant` CloudFormation stack under your [AWS console](https://console.aws.amazon.com/cloudformation/home).
 
+    * If deploying from a Windows environment:
+        * Allow the build script to be executed by setting the current user [PowerShell execution policy](https://go.microsoft.com/fwlink/?LinkID=135170) to `RemoteSigned`.
+            ```
+            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+            ```
+
 1. Deploy the skill and the lambda function in one step:
     ```
     $ ask deploy
