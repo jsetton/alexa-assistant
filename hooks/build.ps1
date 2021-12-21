@@ -85,10 +85,17 @@ function Check-Docker() {
     }
     process {
         $CheckCmd = "docker version; `$Running=`$?"
-        if ($Verbose) {
-            Invoke-Expression -Command $CheckCmd
-        } else {
-            Invoke-Expression -Command $CheckCmd 2>&1 | Out-Null
+        $Running = $false
+        try {
+            if ($Verbose) {
+                Invoke-Expression -Command $CheckCmd
+            } else {
+                Invoke-Expression -Command $CheckCmd 2>&1 | Out-Null
+            }
+        } catch {
+            if ($Verbose) {
+                Show-Log "Exception: $_"
+            }
         }
         return $Running
     }
@@ -128,10 +135,17 @@ function Install-Dependencies() {
     }
     process {
         $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src `"$DockerBuildImage`" npm install --production; `$Installed=`$?"
-        if ($Verbose) {
-            Invoke-Expression -Command $DepCmd
-        } else {
-            Invoke-Expression -Command $DepCmd 2>&1 | Out-Null
+        $Installed = $false
+        try {
+            if ($Verbose) {
+                Invoke-Expression -Command $DepCmd
+            } else {
+                Invoke-Expression -Command $DepCmd 2>&1 | Out-Null
+            }
+        } catch {
+            if ($Verbose) {
+                Show-Log "Exception: $_"
+            }
         }
         return $Installed
     }
