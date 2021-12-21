@@ -27,21 +27,21 @@
     "prettier": "prettier --write *.js"
   },
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.2.3",
-    "@grpc/grpc-js": "^1.3.7",
+    "@googlemaps/google-maps-services-js": "^3.3.4",
+    "@grpc/grpc-js": "^1.4.5",
     "@grpc/proto-loader": "^0.5.5",
     "@suldashi/lame": "^1.2.5",
     "ask-sdk-core": "^2.11.0",
     "ask-sdk-dynamodb-persistence-adapter": "^2.11.0",
-    "ask-sdk-model": "^1.36.1",
-    "aws-sdk": "^2.999.0",
-    "google-auth-library": "^7.10.0",
-    "google-proto-files": "^2.4.1",
+    "ask-sdk-model": "^1.37.1",
+    "aws-sdk": "^2.1047.0",
+    "google-auth-library": "^7.11.0",
+    "google-proto-files": "^2.5.0",
     "pcm-volume": "^1.0.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "prettier": "^2.5.1"
   },
   "prettier": {
     "printWidth": 120,
