@@ -1,0 +1,62 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "google",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "SearchIntent",
+          "slots": [
+            {
+              "name": "search",
+              "type": "SEARCH"
+            }
+          ],
+          "samples": [
+            "{search}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "SEARCH",
+          "values": [
+            {
+              "name": {
+                "value": "女王は誰ですか"
+              }
+            },
+            {
+              "name": {
+                "value": "空色はなぜですか"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

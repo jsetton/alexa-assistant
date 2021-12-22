@@ -33,7 +33,7 @@ exports.uploadStreamFile = async (streamFile, keyName) => {
     await s3.upload(params).promise();
   } catch (error) {
     console.log('S3 upload error:', error);
-    throw new Error('There was an error uploading to S3.');
+    throw 'error.storage_upload';
   }
 
   // Get signed url from s3
@@ -49,6 +49,6 @@ exports.uploadStreamFile = async (streamFile, keyName) => {
     return signedURL;
   } catch (error) {
     console.log('Got s3 get signed url error:', error);
-    throw new Error('There was an error creating the signed URL.');
+    throw 'error.storage_signed_url';
   }
 };

@@ -19,7 +19,7 @@ const getDeviceAddress = async (handlerInput) => {
   } catch {
     console.error('Unable to get device address');
     handlerInput.responseBuilder.withAskForPermissionsConsentCard(permissions);
-    throw new Error("The device country and postal code permission isn't granted. Please check the skill settings.");
+    throw 'error.device_address';
   }
 };
 

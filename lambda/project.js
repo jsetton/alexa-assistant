@@ -100,7 +100,7 @@ exports.register = async (token) => {
     console.log('Got successful device model response');
   } catch (error) {
     console.log('Got model register error:', error);
-    throw new Error('There was an error registering the device model with the Google API.');
+    throw 'error.project_device';
   }
   // Register instance
   try {
@@ -108,6 +108,6 @@ exports.register = async (token) => {
     console.log('Got successful instance model response');
   } catch (error) {
     console.log('Got instance register error:', error);
-    throw new Error('There was an error registering the instance model with the Google API.');
+    throw 'error.project_instance';
   }
 };

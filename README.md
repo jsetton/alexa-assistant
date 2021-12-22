@@ -12,7 +12,7 @@ Implementation of the Google Assistant API for Alexa
 * Supports Node.js 14.x
 * Supports for ASK CLI deployment all-in-one skill and CloudFormation stack with optional local building using docker
 * Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
-* Increased supported locales list
+* Added localized skill translations for all supported languages between the Google Assistant and Alexa API
 * Replaced deprecated render template interface with simple cards display when text response available
 * No longer need to upload `client_secret.json` as replaced by Lambda environmental variables
 * Refactor code separating functionalities and upgrading to ASK SDK v2
@@ -47,20 +47,10 @@ Implementation of the Google Assistant API for Alexa
 
             | Skill Language | Endpoint Region | Deploy Region |
             |:--------------:|:---------------:|:-------------:|
-            | English (CA), English (US), French (CA), Portuguese (BR),<br>Spanish (MX), Spanish (US) | North America | `us-east-1` |
-            | English (UK), French (FR), German, Italian, Spanish (ES) | Europe | `eu-west-1` |
+            | English (CA), English (US), French (CA),<br>Portuguese (BR), Spanish (MX) | North America | `us-east-1` |
+            | English (UK), French (FR), German,<br>Italian, Spanish (ES) | Europe | `eu-west-1` |
             | English (IN) | India | `eu-west-1` |
             | English (AU), Japanese | Far East | `us-west-2` |
-
-        * Add your specific skill locale:
-            ```
-            $ ask skill add-locales
-            ? Please select at least one locale to add: en-GB
-
-            The following skill locale(s) have been added according to your local project:
-              Added locale en-GB.json from en-US's interactionModel
-            Please check the added files above, and run "ask deploy" to deploy the changes.
-            ```
 
     * If upgrading from v2:
         * Create ask hidden directory and states file adding the Skill ID listed under your [Alexa developer console](https://developer.amazon.com/alexa/console/ask). This will prevent duplicate skills from being created under your account.
