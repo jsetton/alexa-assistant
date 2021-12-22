@@ -147,7 +147,7 @@ class GoogleAssistant {
       }, 9000);
 
       responseStream.on('finish', () => {
-        console.log('Response pcm stream finished');
+        console.log('Write response pcm stream complete');
 
         // Cancel timer
         clearTimeout(timer);
@@ -163,6 +163,11 @@ class GoogleAssistant {
         } else {
           reject('error.assistant_audio');
         }
+      });
+
+      responseStream.on('error', (error) => {
+        console.error('Failed to write to response pcm stream:', error);
+        reject('error.assistant_stream');
       });
 
       conversation.on('data', (response) => {
