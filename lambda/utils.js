@@ -7,12 +7,17 @@
 module.exports = {
   /**
    * Returns formatted utterance text
-   * @param  {String} text
+   * @param  {String}   text
+   * @param  {String}   locale
+   * @param  {Function} t
    * @return {String}
    */
-  formatUtterance: (text) => {
-    const keywords = ['who', 'what', 'when', 'where', 'why', 'how', 'is', 'can', 'does', 'do'];
-    const isQuestion = keywords.some((word) => text.toLowerCase().startsWith(word));
-    return text.charAt(0).toUpperCase() + text.slice(1) + (isQuestion ? '?' : '');
+  formatUtterance: (text, locale, t) => {
+    const isQuestion = t('utterance.question_words')
+      .split(',')
+      .some((word) => word && word.localeCompare(text.slice(0, word.length), locale, { sensitivity: 'base' }) === 0);
+    const prefix = isQuestion && locale.startsWith('es') ? '¿' : '';
+    const suffix = isQuestion ? '?' : '';
+    return `${prefix}${text.charAt(0).toUpperCase()}${text.slice(1)}${suffix}`;
   }
 };

@@ -86,7 +86,7 @@ const SearchIntentHandler = {
 
       // Add standard card if response text available
       if (responseText) {
-        const cardTitle = formatUtterance(inputText);
+        const cardTitle = formatUtterance(inputText, locale, handlerInput.t);
         const cardContent = responseText;
         console.log('Card title:', cardTitle);
         console.log('Card content:', cardContent);
