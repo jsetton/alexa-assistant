@@ -18,7 +18,7 @@ exports.getGeoCoordinates = async (address) => {
     const { lat: latitude, lng: longitude } = data.results[0].geometry.location;
     return { latitude, longitude };
   } catch (error) {
-    console.log('Got google maps geocode error:', error);
-    throw new Error('Failed to get google maps geocode coordinates');
+    console.error('Got google maps geocode error:', error);
+    throw 'error.maps_geocode';
   }
 };

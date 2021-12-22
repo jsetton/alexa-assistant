@@ -10,6 +10,8 @@ const { uploadStreamFile } = require('./storage');
 const { encode } = require('./transcoder');
 const { formatUtterance } = require('./utils');
 
+const i18n = require('./i18n');
+
 /**
  * Defines launch request handler
  * @type {Object}
@@ -19,7 +21,8 @@ const LaunchRequestHandler = {
     return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder.speak('Welcome to Google Assistant for Alexa').reprompt().getResponse();
+    const speechOutput = handlerInput.t('message.welcome');
+    return handlerInput.responseBuilder.speak(speechOutput).reprompt().getResponse();
   }
 };
 
@@ -51,9 +54,8 @@ const SearchIntentHandler = {
 
     // Check if access token was provided
     if (!accessToken) {
-      return handlerInput.responseBuilder
-        .speak("The Google API access token wasn't provided. Please disable and re-enable the skill.")
-        .getResponse();
+      const speechOutput = handlerInput.t('error.access_token');
+      return handlerInput.responseBuilder.speak(speechOutput).getResponse();
     }
 
     // Load persistence attributes
@@ -102,7 +104,9 @@ const SearchIntentHandler = {
         handlerInput.responseBuilder.withShouldEndSession(true);
       }
     } catch (error) {
-      handlerInput.responseBuilder.speak(error.message);
+      const key = error instanceof Error ? 'error.default' : error;
+      const speechOutput = handlerInput.t(key);
+      handlerInput.responseBuilder.speak(speechOutput);
     }
 
     // Save persistent attributes
@@ -129,7 +133,8 @@ const YesIntentHandler = {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes();
 
     if (attributes.microphoneOpen) {
-      return SearchIntentHandler.handle(handlerInput, 'yes');
+      const utteranceText = handlerInput.t('utterance.yes');
+      return SearchIntentHandler.handle(handlerInput, utteranceText);
     }
   }
 };
@@ -150,7 +155,8 @@ const NoIntentHandler = {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes();
 
     if (attributes.microphoneOpen) {
-      return SearchIntentHandler.handle(handlerInput, 'no');
+      const utteranceText = handlerInput.t('utterance.no');
+      return SearchIntentHandler.handle(handlerInput, utteranceText);
     }
   }
 };
@@ -168,7 +174,8 @@ const HelpIntentHandler = {
   },
   handle(handlerInput) {
     console.log('Help Intent');
-    return SearchIntentHandler.handle(handlerInput, 'What can you do');
+    const utteranceText = handlerInput.t('utterance.help');
+    return SearchIntentHandler.handle(handlerInput, utteranceText);
   }
 };
 
@@ -188,10 +195,12 @@ const StopIntentHandler = {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes();
 
     if (attributes.microphoneOpen) {
-      return SearchIntentHandler.handle(handlerInput, 'stop');
+      const utteranceText = handlerInput.t('utterance.stop');
+      return SearchIntentHandler.handle(handlerInput, utteranceText);
     }
 
-    return handlerInput.responseBuilder.speak('Stopped').getResponse();
+    const speechOutput = handlerInput.t('message.goodbye');
+    return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   }
 };
 
@@ -211,10 +220,12 @@ const CancelIntentHandler = {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes();
 
     if (attributes.microphoneOpen) {
-      return SearchIntentHandler.handle(handlerInput, 'cancel');
+      const utteranceText = handlerInput.t('utterance.cancel');
+      return SearchIntentHandler.handle(handlerInput, utteranceText);
     }
 
-    return handlerInput.responseBuilder.speak('Cancelled').getResponse();
+    const speechOutput = handlerInput.t('message.goodbye');
+    return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   }
 };
 
@@ -228,7 +239,8 @@ const UnhandledIntentHandler = {
   },
   handle(handlerInput) {
     console.log('Unhandled event');
-    return handlerInput.responseBuilder.speak("Sorry, I didn't get that.").getResponse();
+    const speechOutput = handlerInput.t('message.unhandled');
+    return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   }
 };
 
@@ -250,7 +262,8 @@ const SessionEndedRequestHandler = {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes();
 
     if (attributes.microphoneOpen) {
-      return SearchIntentHandler.handle(handlerInput, 'goodbye');
+      const utteranceText = handlerInput.t('utterance.goodbye');
+      return SearchIntentHandler.handle(handlerInput, utteranceText);
     }
   }
 };
@@ -265,7 +278,19 @@ const ErrorHandler = {
   },
   handle(handlerInput, error) {
     console.error('Request error:', error);
-    return handlerInput.responseBuilder.speak('Something went wrong.').getResponse();
+    const speechOutput = handlerInput.t('error.default');
+    return handlerInput.responseBuilder.speak(speechOutput).getResponse();
+  }
+};
+
+/**
+ * Defines localize request interceptor
+ * @type {Object}
+ */
+const LocalizeRequestInterceptor = {
+  async process(handlerInput) {
+    const locale = Alexa.getLocale(handlerInput.requestEnvelope);
+    handlerInput.t = await i18n.init(locale);
   }
 };
 
@@ -315,7 +340,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
-  .addRequestInterceptors(LogRequestInterceptor)
+  .addRequestInterceptors(LocalizeRequestInterceptor, LogRequestInterceptor)
   .addResponseInterceptors(LogResponseInterceptor)
   .withApiClient(new Alexa.DefaultApiClient())
   .withPersistenceAdapter(persistenceAdapter)

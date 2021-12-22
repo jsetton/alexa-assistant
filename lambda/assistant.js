@@ -142,7 +142,7 @@ class GoogleAssistant {
       // Set a timer to timeout after 9 seconds
       const timer = setTimeout(() => {
         if (!audioPresent) {
-          reject(new Error('Response timeout from the Google Assistant API'));
+          reject('error.assistant_timeout');
         }
       }, 9000);
 
@@ -161,7 +161,7 @@ class GoogleAssistant {
         if (fileSizeInBytes > 0) {
           resolve([responseFile, responseText]);
         } else {
-          reject(new Error('No audio response received from the Google Assistant API'));
+          reject('error.assistant_audio');
         }
       });
 
@@ -228,7 +228,7 @@ class GoogleAssistant {
 
       conversation.on('error', (error) => {
         console.error('Got a Google Assistant error:', error);
-        reject(new Error('Error returned from the Google Assistant API.'));
+        reject('error.assistant');
       });
 
       conversation.write(request);

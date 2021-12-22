@@ -3,16 +3,208 @@
     "manifestVersion": "1.0",
     "publishingInformation": {
       "locales": {
-        "en-US": {
+        "de-DE": {
           "name": "Google Assistant",
-          "summary": "Google Assistant API for Alexa",
-          "description": "Google Assistant API for Alexa",
+          "summary": "Google Assistant für Alexa",
+          "description": "Google Assistant für Alexa",
           "largeIconUri": "file://assets/images/en-US_largeIcon.png",
           "smallIconUri": "file://assets/images/en-US_smallIcon.png",
           "examplePhrases": [
-            "Alexa, ask google what time is it?",
-            "Alexa, ask google who is the queen?",
-            "Alexa, ask google why is the sky blue?"
+            "Alexa, frag Google wie spät ist es?",
+            "Alexa, frag Google wer ist die königin?",
+            "Alexa, frag Google warum ist der Himmel blau?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "en-AU": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant for Alexa",
+          "description": "Google Assistant for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask Google what time is it?",
+            "Alexa, ask Google who is the queen?",
+            "Alexa, ask Google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "en-CA": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant for Alexa",
+          "description": "Google Assistant for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask Google what time is it?",
+            "Alexa, ask Google who is the queen?",
+            "Alexa, ask Google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "en-GB": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant for Alexa",
+          "description": "Google Assistant for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask Google what time is it?",
+            "Alexa, ask Google who is the queen?",
+            "Alexa, ask Google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "en-IN": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant for Alexa",
+          "description": "Google Assistant for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask Google what time is it?",
+            "Alexa, ask Google who is the queen?",
+            "Alexa, ask Google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "en-US": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant for Alexa",
+          "description": "Google Assistant for Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, ask Google what time is it?",
+            "Alexa, ask Google who is the queen?",
+            "Alexa, ask Google why is the sky blue?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "es-ES": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant para Alexa",
+          "description": "Google Assistant para Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, pregúntale a Google qué hora es?",
+            "Alexa, pregúntale a Google quien es la reina?",
+            "Alexa, pregúntale a Google porque el cielo es azul?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "es-MX": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant para Alexa",
+          "description": "Google Assistant para Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, pregúntale a Google qué hora es?",
+            "Alexa, pregúntale a Google quien es la reina?",
+            "Alexa, pregúntale a Google porque el cielo es azul?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "fr-CA": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant pour Alexa",
+          "description": "Google Assistant pour Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, demande à Google quelle heure est-il?",
+            "Alexa, demande à Google qui est la reine?",
+            "Alexa, demande à Google pourquoi le ciel est bleu?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "fr-FR": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant pour Alexa",
+          "description": "Google Assistant pour Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, demande à Google quelle heure est-il?",
+            "Alexa, demande à Google qui est la reine?",
+            "Alexa, demande à Google pourquoi le ciel est bleu?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "it-IT": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant per Alexa",
+          "description": "Google Assistant per Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, chiedi a Google che ore sono?",
+            "Alexa, chiedi a Google chi è la regina?",
+            "Alexa, chiedi a Google perché il cielo è azzurro?"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "ja-JP": {
+          "name": "Google Assistant",
+          "summary": "AlexaのGoogle Assistant",
+          "description": "AlexaのGoogle Assistant",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, Googleに今何時ですか？",
+            "Alexa, Googleに女王は誰ですか？",
+            "Alexa, Googleなぜ空色なの？"
+          ],
+          "keywords": [
+            "google",
+            "assitant"
+          ]
+        },
+        "pt-BR": {
+          "name": "Google Assistant",
+          "summary": "Google Assistant para Alexa",
+          "description": "Google Assistant para Alexa",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "examplePhrases": [
+            "Alexa, pergunte ao Google que horas são?",
+            "Alexa, pergunte ao Google quem é a rainha?",
+            "Alexa, pergunte ao Google por que o céu é azul?"
           ],
           "keywords": [
             "google",
