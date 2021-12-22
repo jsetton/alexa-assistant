@@ -23,7 +23,7 @@ function handleRequest(options) {
           console.log('Model already exists');
           resolve(body);
         } else {
-          console.log('Error code received');
+          console.error('Error code received');
           reject(body);
         }
       }
@@ -99,7 +99,7 @@ exports.register = async (token) => {
     await registerDevice(token);
     console.log('Got successful device model response');
   } catch (error) {
-    console.log('Got model register error:', error);
+    console.error('Got model register error:', error);
     throw 'error.project_device';
   }
   // Register instance
@@ -107,7 +107,7 @@ exports.register = async (token) => {
     await registerInstance(token);
     console.log('Got successful instance model response');
   } catch (error) {
-    console.log('Got instance register error:', error);
+    console.error('Got instance register error:', error);
     throw 'error.project_instance';
   }
 };

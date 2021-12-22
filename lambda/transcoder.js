@@ -42,16 +42,29 @@ exports.encode = (pcmFile) => {
       console.log('Read pcm stream complete');
     });
 
+    readpcm.on('error', (error) => {
+      console.error('Failed to read pcm stream:', error);
+      reject('error.transcoder_encode');
+    });
+
+    encoder.on('finish', () => {
+      console.log('Encode mp3 file complete');
+    });
+
+    encoder.on('error', (error) => {
+      console.error('Failed to encode mp3 file:', error);
+      reject('error.transcoder_encode');
+    });
+
     writemp3.on('finish', () => {
       console.log('Write mp3 file complete');
       // Return mp3 file path
       resolve(mp3File);
     });
 
-    encoder.on('finish', () => {
-      console.log('Encode mp3 file complete');
-      // Close the MP3 file
-      writemp3.end();
+    writemp3.on('error', (error) => {
+      console.error('Failed to write mp3 file:', error);
+      reject('error.transcoder_encode');
     });
 
     // Pipe output of LAME encoder into MP3 file writer
