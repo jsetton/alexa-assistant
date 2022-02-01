@@ -2,9 +2,11 @@
 
 const fs = require('fs');
 const { PassThrough } = require('stream');
-const AWS = require('aws-sdk');
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { Upload } = require('@aws-sdk/lib-storage');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
-const s3 = new AWS.S3();
+const client = new S3Client({ region: process.env.AWS_REGION });
 
 // Get environment settings
 const S3_BUCKET = process.env.S3_BUCKET;
@@ -25,12 +27,15 @@ exports.uploadStreamFile = async (streamFile, keyName) => {
 
   // Upload passthrough stream to S3
   try {
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: keyName,
-      Body: pass
-    };
-    await s3.upload(params).promise();
+    const upload = new Upload({
+      client,
+      params: {
+        Bucket: S3_BUCKET,
+        Key: keyName,
+        Body: pass
+      }
+    });
+    await upload.done();
   } catch (error) {
     console.error('S3 upload error:', error);
     throw 'error.storage_upload';
@@ -38,13 +43,12 @@ exports.uploadStreamFile = async (streamFile, keyName) => {
 
   // Get signed url from s3
   try {
-    const params = {
+    const command = new GetObjectCommand({
       Bucket: S3_BUCKET,
       Key: keyName,
-      Expires: 10,
       ResponseContentType: 'audio/mpeg'
-    };
-    const signedURL = await s3.getSignedUrlPromise('getObject', params);
+    });
+    const signedURL = await getSignedUrl(client, command, { expiresIn: 10 });
     console.log('Signed URL:', signedURL);
     return signedURL;
   } catch (error) {
