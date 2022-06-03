@@ -31,7 +31,7 @@ Implementation of the Google Assistant API for Alexa
         * `https://pitangui.amazon.com/api/skill/link/<vendorId>`
         * `https://alexa.amazon.co.jp/api/skill/link/<vendorId>`
 
-    * Setup your Google environment by following the [Google-related](https://github.com/tartanguru/alexa-assistant-instructions/blob/master/fresh_install.md#enable-google-assistant-api-) installation instructions only, skipping all Amazon-related steps, and taking note of the [Project ID](https://console.cloud.google.com/cloud-resource-manager) that was created. Once completed, create your Google Maps API key as follow:
+    * Setup your Google environment by following the [Google-related](https://github.com/jsetton/alexa-assistant-instructions/blob/main/fresh_install.md#enable-google-assistant-api-) installation instructions only, skipping all Amazon-related steps, and taking note of the [Project ID](https://console.cloud.google.com/cloud-resource-manager) that was created. Once completed, create your Google Maps API key as follow:
         * Enable the [Google Maps Geocoding API](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com) under the same project.
         * Enable the [billing](https://console.cloud.google.com/project/_/billing/enable) for the project. (Usage should be covered by monthly free tier credit)
         * Create a new [API key credential](https://console.cloud.google.com/apis/credentials) and edit it:
