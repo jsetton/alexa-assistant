@@ -30,7 +30,7 @@
     "@aws-sdk/client-s3": "^3.72.0",
     "@aws-sdk/lib-storage": "^3.72.0",
     "@aws-sdk/s3-request-presigner": "^3.72.0",
-    "@googlemaps/google-maps-services-js": "^3.3.13",
+    "@googlemaps/google-maps-services-js": "^3.3.15",
     "@grpc/grpc-js": "^1.6.6",
     "@grpc/proto-loader": "^0.5.5",
     "@suldashi/lame": "^1.2.5",
