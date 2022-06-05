@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: amazon/aws-sam-cli-build-image-nodejs14.x
+      image: public.ecr.aws/sam/build-nodejs16.x
 
     steps:
     - name: Checkout repository
