@@ -9,7 +9,7 @@ Implementation of the Google Assistant API for Alexa
 
 # What's New in this release
 
-* Supports Node.js 14.x
+* Supports Node.js 16.x
 * Supports for ASK CLI deployment all-in-one skill and CloudFormation stack with optional local building using docker
 * Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
 * Added localized skill translations for all supported languages between the Google Assistant and Alexa API

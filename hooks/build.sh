@@ -11,7 +11,7 @@
 readonly OUT_FILE=${1:-"upload.zip"}
 readonly DO_DEBUG=${2:-false}
 
-readonly DOCKER_BUILD_IMAGE="amazon/aws-sam-cli-build-image-nodejs14.x"
+readonly DOCKER_BUILD_IMAGE="public.ecr.aws/sam/build-nodejs16.x"
 readonly LATEST_RELEASE_URL="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 main() {
