@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.181.0",
-    "@aws-sdk/lib-storage": "^3.162.0",
+    "@aws-sdk/lib-storage": "^3.200.0",
     "@aws-sdk/s3-request-presigner": "^3.182.0",
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@grpc/grpc-js": "^1.7.1",
