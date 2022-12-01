@@ -39,7 +39,7 @@
     "ask-sdk-model": "^1.39.0",
     "google-auth-library": "^8.6.0",
     "google-proto-files": "^3.0.2",
-    "i18next": "^21.8.11",
+    "i18next": "^22.0.6",
     "pcm-volume": "^1.0.0",
     "request": "^2.88.2"
   },
