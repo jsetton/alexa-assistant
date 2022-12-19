@@ -1,8 +1,8 @@
 'use strict';
 
-const Alexa = require('ask-sdk-core');
+import Alexa from 'ask-sdk-core';
 
-const { getGeoCoordinates } = require('./maps');
+import { getGeoCoordinates } from './maps.js';
 
 /**
  * Returns device country and postal code address object
@@ -28,7 +28,7 @@ const getDeviceAddress = async (handlerInput) => {
  * @param  {Object}  handlerInput
  * @return {Promise}
  */
-exports.getDeviceLocation = async (handlerInput) => {
+export const getDeviceLocation = async (handlerInput) => {
   // Get device address country and postal code
   const address = await getDeviceAddress(handlerInput);
   console.log('Device address:', address);
