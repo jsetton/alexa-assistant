@@ -9,7 +9,7 @@ Implementation of the Google Assistant API for Alexa
 
 # What's New in this release
 
-* Supports Node.js 16.x
+* Supports Node.js 18.x
 * Supports for ASK CLI deployment all-in-one skill and CloudFormation stack with optional local building using docker
 * Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
 * Added localized skill translations for all supported languages between the Google Assistant and Alexa API
@@ -105,6 +105,6 @@ Implementation of the Google Assistant API for Alexa
     ```
 
 3. Enable the skill on your Alexa account:
-    * Go to your [Alexa skill console](https://alexa.amazon.com/spa/index.html#skills/your-skills/?ref-suffix=ysa_gw)
-    * Click on the "Google Assistant" skill under the "Dev Skills" tab
-    * Click "Enable", activate the "Device Country and Postal Code" permission and go through the account linking process
+    * Go to your Alexa app > More > Skills & Games.
+    * Select the "Google Assistant" skill under Your Skills > Dev tab.
+    * Tap "Enable to Use", go through the account linking process and save the "Device Country and Postal Code" permission.

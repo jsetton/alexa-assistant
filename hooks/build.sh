@@ -11,7 +11,7 @@
 readonly OUT_FILE=${1:-"upload.zip"}
 readonly DO_DEBUG=${2:-false}
 
-readonly DOCKER_BUILD_IMAGE="public.ecr.aws/sam/build-nodejs16.x"
+readonly DOCKER_BUILD_IMAGE="public.ecr.aws/sam/build-nodejs18.x"
 readonly LATEST_RELEASE_URL="https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 main() {
@@ -81,9 +81,9 @@ install_dependencies() {
   display_debug "Installing NodeJS dependencies based on the package.json."
 
   if [[ $DO_DEBUG == true ]]; then
-    docker run --rm -v "$PWD:/src" -w /src "$DOCKER_BUILD_IMAGE" npm ci --production
+    docker run --rm -v "$PWD:/src" -w /src -e NODE_ENV=production "$DOCKER_BUILD_IMAGE" npm ci
   else
-    docker run --rm -v "$PWD:/src" -w /src "$DOCKER_BUILD_IMAGE" npm ci --production > /dev/null 2>&1
+    docker run --rm -v "$PWD:/src" -w /src -e NODE_ENV=production "$DOCKER_BUILD_IMAGE" npm ci > /dev/null 2>&1
   fi
   return $?
 }
