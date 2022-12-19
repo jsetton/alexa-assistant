@@ -1,13 +1,13 @@
 'use strict';
 
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
-const protoFiles = require('google-proto-files');
-const { OAuth2Client } = require('google-auth-library');
+import grpc from '@grpc/grpc-js';
+import protoLoader from '@grpc/proto-loader';
+import protoFiles from 'google-proto-files';
+import { OAuth2Client } from 'google-auth-library';
 
 const packageDefinition = protoLoader.loadSync(protoFiles.embeddedAssistant.v1alpha2, {
   includeDirs: [protoFiles.getProtoPath('..')],
@@ -49,7 +49,7 @@ const SUPPORTED_LOCALES = [
 /**
  * Defines google assistant class
  */
-class GoogleAssistant {
+export default class GoogleAssistant {
   /**
    * Constructor
    * @param {String} token
@@ -241,5 +241,3 @@ class GoogleAssistant {
     });
   }
 }
-
-module.exports = GoogleAssistant;

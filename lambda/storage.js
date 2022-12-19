@@ -1,10 +1,10 @@
 'use strict';
 
-const fs = require('fs');
-const { PassThrough } = require('stream');
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
-const { Upload } = require('@aws-sdk/lib-storage');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+import fs from 'node:fs';
+import { PassThrough } from 'node:stream';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 const client = new S3Client({ region: process.env.AWS_REGION });
 
@@ -17,7 +17,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
  * @param  {String}  keyName
  * @return {Promise}
  */
-exports.uploadStreamFile = async (streamFile, keyName) => {
+export const uploadStreamFile = async (streamFile, keyName) => {
   // Create passthrough stream
   const pass = new PassThrough();
   // Create read stream from given file

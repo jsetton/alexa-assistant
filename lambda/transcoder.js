@@ -1,15 +1,15 @@
 'use strict';
 
-const fs = require('fs');
-const lame = require('@suldashi/lame');
-const Volume = require('pcm-volume');
+import fs from 'node:fs';
+import lame from '@flat/lame';
+import Volume from 'pcm-volume';
 
 /**
  * Returns encoded mp3 file path
  * @param  {String} pcmFile
  * @return {Promise}
  */
-exports.encode = (pcmFile) => {
+export const encode = (pcmFile) => {
   // This function takes the response from the API and re-encodes using LAME
   // There is lots of reading and writing from temp files which isn't ideal
   // but I couldn't get piping to/from LAME work reliably in Lambda

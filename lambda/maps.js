@@ -1,6 +1,6 @@
 'use strict';
 
-const { Client } = require('@googlemaps/google-maps-services-js');
+import { Client } from '@googlemaps/google-maps-services-js';
 
 const client = new Client();
 
@@ -12,7 +12,7 @@ const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
  * @param  {String}  address
  * @return {Promise}
  */
-exports.getGeoCoordinates = async (address) => {
+export const getGeoCoordinates = async (address) => {
   try {
     const { data } = await client.geocode({ params: { address, key: GOOGLE_MAPS_API_KEY } });
     const { lat: latitude, lng: longitude } = data.results[0].geometry.location;

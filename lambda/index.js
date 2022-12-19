@@ -1,16 +1,15 @@
 'use strict';
 
-const Alexa = require('ask-sdk-core');
-const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
+import Alexa from 'ask-sdk-core';
+import { DynamoDbPersistenceAdapter } from 'ask-sdk-dynamodb-persistence-adapter';
 
-const GoogleAssistant = require('./assistant');
-const { getDeviceLocation } = require('./device');
-const { register } = require('./project');
-const { uploadStreamFile } = require('./storage');
-const { encode } = require('./transcoder');
-const { formatUtterance } = require('./utils');
-
-const i18n = require('./i18n');
+import GoogleAssistant from './assistant.js';
+import { getDeviceLocation } from './device.js';
+import { initLocalization } from './locale.js';
+import { register } from './project.js';
+import { uploadStreamFile } from './storage.js';
+import { encode } from './transcoder.js';
+import { formatUtterance } from './utils.js';
 
 /**
  * Defines launch request handler
@@ -104,8 +103,13 @@ const SearchIntentHandler = {
         handlerInput.responseBuilder.withShouldEndSession(true);
       }
     } catch (error) {
-      const key = error instanceof Error ? 'error.default' : error;
-      const speechOutput = handlerInput.t(key);
+      let speechOutput;
+      if (error instanceof Error) {
+        console.error(error);
+        speechOutput = handlerInput.t('error.default');
+      } else {
+        speechOutput = handlerInput.t(error);
+      }
       handlerInput.responseBuilder.speak(speechOutput);
     }
 
@@ -290,7 +294,7 @@ const ErrorHandler = {
 const LocalizeRequestInterceptor = {
   async process(handlerInput) {
     const locale = Alexa.getLocale(handlerInput.requestEnvelope);
-    handlerInput.t = await i18n.init(locale);
+    handlerInput.t = await initLocalization(locale);
   }
 };
 
@@ -327,7 +331,7 @@ const persistenceAdapter = new DynamoDbPersistenceAdapter({
  * Defines skill lambda handler
  * @type {Function}
  */
-exports.handler = Alexa.SkillBuilders.custom()
+export const handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
     SearchIntentHandler,
