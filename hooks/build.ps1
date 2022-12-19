@@ -31,7 +31,7 @@ param(
 #----------------[ Declarations ]----------------------------------------------------
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
-$DockerBuildImage = "public.ecr.aws/sam/build-nodejs16.x"
+$DockerBuildImage = "public.ecr.aws/sam/build-nodejs18.x"
 $LatestReleaseUrl = "https://github.com/jsetton/alexa-assistant/releases/latest/download/lambda.zip"
 
 #----------------[ Functions ]----------------------------------------------------
@@ -135,7 +135,7 @@ function Install-Dependencies() {
         Show-Log "Installing skill dependencies based on package.json."
     }
     process {
-        $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src `"$DockerBuildImage`" npm install --production; `$Installed=`$?"
+        $DepCmd = "docker run --rm -v `"${pwd}:/src`" -w /src -e NODE_ENV=production `"$DockerBuildImage`" npm ci; `$Installed=`$?"
         $Installed = $false
         try {
             if ($Verbose) {
