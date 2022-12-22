@@ -1,9 +1,6 @@
-'use strict';
-
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
 import protoFiles from 'google-proto-files';

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Returns formatted utterance text
  * @param  {String}   text
