@@ -2,20 +2,12 @@
   "name": "alexa-assistant",
   "version": "3.3.1",
   "description": "An unofficial Google skill for Alexa",
-  "main": "index.js",
-  "type": "module",
-  "contributors": [
-    "Ross Atkin",
-    "Jeremy Setton"
-  ],
   "license": "GPL-3.0",
-  "homepage": "https://github.com/jsetton/alexa-assistant#readme",
-  "keywords": [
-    "alexa",
-    "skill",
-    "google",
-    "assistant"
+  "author": "Jeremy Setton",
+  "contributors": [
+    "Ross Atkin"
   ],
+  "homepage": "https://github.com/jsetton/alexa-assistant",
   "repository": {
     "type": "git",
     "url": "https://github.com/jsetton/alexa-assistant.git"
@@ -23,6 +15,8 @@
   "bugs": {
     "url": "https://github.com/jsetton/alexa-assistant/issues"
   },
+  "type": "module",
+  "exports": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier --write *.js"
