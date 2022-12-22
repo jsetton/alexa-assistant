@@ -15,7 +15,7 @@ Implementation of the Google Assistant API for Alexa
 * Added localized skill translations for all supported languages between the Google Assistant and Alexa API
 * Replaced deprecated render template interface with simple cards display when text response available
 * No longer need to upload `client_secret.json` as replaced by Lambda environmental variables
-* Refactor code separating functionalities and upgrading to ASK SDK v2
+* Refactor code separating functionalities and upgrading to ASK SDK v3
 * Added automated build release via GitHub actions
 
 # Deployment Steps
@@ -107,4 +107,4 @@ Implementation of the Google Assistant API for Alexa
 3. Enable the skill on your Alexa account:
     * Go to your Alexa app > More > Skills & Games.
     * Select the "Google Assistant" skill under Your Skills > Dev tab.
-    * Tap "Enable to Use", go through the account linking process and save the "Device Country and Postal Code" permission.
+    * Tap "Enable to Use", go through the account linking process and grant the "Device Country and Postal Code" permission.
