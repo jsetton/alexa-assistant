@@ -1,5 +1,3 @@
-'use strict';
-
 import fetch from 'node-fetch';
 
 // Get environment settings
@@ -8,30 +6,32 @@ const GOOGLE_PROJECT_ID = process.env.GOOGLE_PROJECT_ID;
 
 /**
  * Handles request
- * @param  {String} url
+ * @param  {String} urn
  * @param  {String} token
- * @param  {Object} body
+ * @param  {Object} parameters
  * @return {Promise}
  */
-const handleRequest = async (url, token, body) => {
-  const response = await fetch(url, {
+const handleRequest = (urn, token, parameters) => {
+  const url = `https://${GOOGLE_ASSISTANT_API_ENDPOINT}/v1alpha2/projects/${GOOGLE_PROJECT_ID}/${urn}/`;
+  const options = {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body)
-  });
-
-  if (!response.ok) {
-    if (response.status === 409) {
-      console.log('Model already exists');
-    } else {
-      console.error(`Error code ${response.status} received`);
-      const { error } = await response.json();
-      throw error;
+    body: JSON.stringify(parameters)
+  };
+  return fetch(url, options).then(async (response) => {
+    if (!response.ok) {
+      if (response.status === 409) {
+        console.log('Model already exists');
+      } else {
+        console.error(`Response code ${response.status} (${response.statusText})`);
+        const { error } = await response.json();
+        throw error;
+      }
     }
-  }
+  });
 };
 
 /**
@@ -40,8 +40,7 @@ const handleRequest = async (url, token, body) => {
  * @return {Promise}
  */
 const registerDevice = (token) => {
-  const url = `https://${GOOGLE_ASSISTANT_API_ENDPOINT}/v1alpha2/projects/${GOOGLE_PROJECT_ID}/deviceModels/`;
-  const deviceModel = {
+  const parameters = {
     project_id: GOOGLE_PROJECT_ID,
     device_model_id: GOOGLE_PROJECT_ID,
     manifest: {
@@ -52,8 +51,7 @@ const registerDevice = (token) => {
     device_type: 'action.devices.types.LIGHT',
     traits: ['action.devices.traits.OnOff']
   };
-
-  handleRequest(url, token, deviceModel);
+  return handleRequest('deviceModels', token, parameters);
 };
 
 /**
@@ -62,15 +60,13 @@ const registerDevice = (token) => {
  * @return {Promise}
  */
 const registerInstance = (token) => {
-  const url = `https://${GOOGLE_ASSISTANT_API_ENDPOINT}/v1alpha2/projects/${GOOGLE_PROJECT_ID}/devices/`;
-  const instanceModel = {
+  const parameters = {
     id: GOOGLE_PROJECT_ID,
     model_id: GOOGLE_PROJECT_ID,
     nickname: 'Alexa Assistant v1',
     clientType: 'SDK_SERVICE'
   };
-
-  handleRequest(url, token, instanceModel);
+  return handleRequest('devices', token, parameters);
 };
 
 /**
@@ -80,7 +76,6 @@ const registerInstance = (token) => {
  */
 export const register = async (token) => {
   console.log('Project registration started');
-
   // Register device
   try {
     await registerDevice(token);

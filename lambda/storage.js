@@ -1,5 +1,3 @@
-'use strict';
-
 import fs from 'node:fs';
 import { PassThrough } from 'node:stream';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';

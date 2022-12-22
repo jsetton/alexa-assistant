@@ -1,5 +1,3 @@
-'use strict';
-
 import fs from 'node:fs';
 import lame from '@flat/lame';
 import Volume from 'pcm-volume';

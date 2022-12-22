@@ -1,8 +1,5 @@
-'use strict';
-
 import Alexa from 'ask-sdk-core';
 import { DynamoDbPersistenceAdapter } from 'ask-sdk-dynamodb-persistence-adapter';
-
 import GoogleAssistant from './assistant.js';
 import { getDeviceLocation } from './device.js';
 import { initLocalization } from './locale.js';

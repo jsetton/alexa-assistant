@@ -1,5 +1,3 @@
-'use strict';
-
 import Alexa from 'ask-sdk-core';
 
 import { getGeoCoordinates } from './maps.js';
