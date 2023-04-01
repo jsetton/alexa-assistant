@@ -28,7 +28,7 @@
     "@flat/lame": "^1.2.6",
     "@googlemaps/google-maps-services-js": "^3.3.26",
     "@grpc/grpc-js": "^1.8.11",
-    "@grpc/proto-loader": "^0.7.5",
+    "@grpc/proto-loader": "^0.7.6",
     "ask-sdk-core": "^2.12.1",
     "ask-sdk-dynamodb-persistence-adapter": "^2.12.1",
     "ask-sdk-model": "^1.53.0",
