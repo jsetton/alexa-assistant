@@ -41,7 +41,7 @@ Implementation of the Google Assistant API for Alexa
 
     * Configure your `GoogleProjectId` and `GoogleMapsApiKey` in [`ask-resources.json`](ask-resources.json). To enable debug logs, add `LambdaDebug` set to `true` in the skill infrastructure cloudformation user config parameters.
 
-    * Configure your Google Assistant API `clientId` and `clientSecret` in [`skill-package/accountLinking.json`](skill-package/accountLinking.json)
+    * Configure your Google Assistant API `clientId` and `clientSecret` in [`accountLinking.json`](accountLinking.json)
 
     * If your default language isn't English (US):
         * Configure your deploy `awsRegion` in [`ask-resources.json`](ask-resources.json) based on the table below:
@@ -99,7 +99,7 @@ Implementation of the Google Assistant API for Alexa
 
 2. Update the skill account linking information using the Skill ID displayed in previous step:
     ```
-    $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:skill-package/accountLinking.json
+    $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:accountLinking.json
 
     Command executed successfully!
     ```
