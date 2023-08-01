@@ -31,7 +31,7 @@
     "@grpc/proto-loader": "^0.7.7",
     "ask-sdk-core": "^2.14.0",
     "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
-    "ask-sdk-model": "^1.79.0",
+    "ask-sdk-model": "^1.81.0",
     "google-auth-library": "^9.0.0",
     "google-proto-files": "^3.0.3",
     "i18next": "^23.4.1",
