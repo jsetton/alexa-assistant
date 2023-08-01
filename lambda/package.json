@@ -34,7 +34,7 @@
     "ask-sdk-model": "^1.79.0",
     "google-auth-library": "^9.0.0",
     "google-proto-files": "^3.0.3",
-    "i18next": "^22.4.9",
+    "i18next": "^23.4.1",
     "node-fetch": "^3.3.2",
     "pcm-volume": "^1.0.0"
   },
