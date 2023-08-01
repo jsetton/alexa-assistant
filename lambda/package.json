@@ -35,7 +35,7 @@
     "google-auth-library": "^9.0.0",
     "google-proto-files": "^3.0.3",
     "i18next": "^22.4.9",
-    "node-fetch": "^3.3.1",
+    "node-fetch": "^3.3.2",
     "pcm-volume": "^1.0.0"
   },
   "devDependencies": {
