@@ -214,7 +214,7 @@
       },
       "distributionCountries": [],
       "isAvailableWorldwide": true,
-      "distributionMode": "PRIVATE",
+      "distributionMode": "PUBLIC",
       "category": "ORGANIZERS_AND_ASSISTANTS"
     },
     "permissions": [
