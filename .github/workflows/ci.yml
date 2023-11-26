@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: public.ecr.aws/sam/build-nodejs18.x
+      image: public.ecr.aws/sam/build-nodejs20.x
 
     steps:
     - name: Checkout repository
