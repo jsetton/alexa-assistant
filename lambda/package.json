@@ -27,7 +27,7 @@
     "@aws-sdk/s3-request-presigner": "^3.440.0",
     "@flat/lame": "^1.2.7",
     "@googlemaps/google-maps-services-js": "^3.3.41",
-    "@grpc/grpc-js": "^1.9.9",
+    "@grpc/grpc-js": "^1.9.12",
     "@grpc/proto-loader": "^0.7.10",
     "ask-sdk-core": "^2.14.0",
     "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
