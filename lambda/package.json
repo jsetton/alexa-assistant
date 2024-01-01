@@ -33,7 +33,7 @@
     "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
     "ask-sdk-model": "^1.86.0",
     "google-auth-library": "^9.4.1",
-    "google-proto-files": "^3.0.3",
+    "google-proto-files": "^4.0.0",
     "i18next": "^23.7.13",
     "node-fetch": "^3.3.2",
     "pcm-volume": "^1.0.0"
