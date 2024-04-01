@@ -26,7 +26,7 @@ jobs:
       working-directory: lambda
 
     - name: Create new release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: lambda.zip
       env:
