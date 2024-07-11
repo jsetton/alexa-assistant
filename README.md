@@ -15,7 +15,7 @@ Implementation of the Google Assistant API for Alexa
 * Added localized skill translations for all supported languages between the Google Assistant and Alexa API
 * Replaced deprecated render template interface with simple cards display when text response available
 * No longer need to upload `client_secret.json` as replaced by Lambda environmental variables
-* Refactor code separating functionalities and upgrading to ASK SDK v3
+* Refactor code separating functionalities and upgrading to ASK SDK v2
 * Added automated build release via GitHub actions
 
 # Deployment Steps
@@ -54,9 +54,8 @@ Implementation of the Google Assistant API for Alexa
             | English (AU), Japanese | Far East | `us-west-2` |
 
     * If upgrading from v2:
-        * Create ask hidden directory and states file adding the Skill ID listed under your [Alexa developer console](https://developer.amazon.com/alexa/console/ask). This will prevent duplicate skills from being created under your account.
+        * Create the ASK CLI states file as `.ask/ask-states.json`, adding the Skill ID listed under your [Alexa developer console](https://developer.amazon.com/alexa/console/ask). This will prevent duplicate skills from being created under your account.
             ```
-            $ cat .ask/ask-states.json
             {
               "askcliStatesVersion": "2020-03-31",
               "profiles": {
@@ -76,32 +75,12 @@ Implementation of the Google Assistant API for Alexa
 
 1. Deploy the skill and the lambda function in one step:
     ```
-    $ ask deploy
-    Deploy configuration loaded from ask-resources.json
-    Deploy project for profile [default]
-
-    ==================== Deploy Skill Metadata ====================
-    Skill package deployed successfully.
-    Skill ID: <skillId>
-
-    ==================== Build Skill Code ====================
-    Skill code built successfully.
-    Code for region default built to <skillPath>/.ask/lambda/build.zip successfully with build flow CustomBuildFlow.
-
-    ==================== Deploy Skill Infrastructure ====================
-    ✔ Deploy Alexa skill infrastructure for region "default"
-    The api endpoints of skill.json have been updated from the skill infrastructure deploy results.
-    Skill infrastructures deployed successfully through @ask-cli/cfn-deployer.
-
-    ==================== Enable Skill ====================
-    Skill is enabled successfully.
+    ask deploy
     ```
 
 2. Update the skill account linking information using the Skill ID displayed in previous step:
     ```
-    $ ask smapi update-account-linking-info -s <skillId> --account-linking-request file:accountLinking.json
-
-    Command executed successfully!
+    ask smapi update-account-linking-info -s <skillId> --account-linking-request file:accountLinking.json
     ```
 
 3. Enable the skill on your Alexa account:
