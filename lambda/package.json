@@ -22,7 +22,7 @@
     "prettier": "prettier --write *.js"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.606.0",
+    "@aws-sdk/client-s3": "^3.637.0",
     "@aws-sdk/lib-storage": "^3.621.0",
     "@aws-sdk/s3-request-presigner": "^3.637.0",
     "@flat/lame": "^1.2.8",
