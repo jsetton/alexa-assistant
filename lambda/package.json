@@ -32,7 +32,7 @@
     "ask-sdk-core": "^2.14.0",
     "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
     "ask-sdk-model": "^1.86.0",
-    "google-auth-library": "^10.3.0",
+    "google-auth-library": "^10.5.0",
     "google-proto-files": "^5.0.1",
     "i18next": "^25.6.0",
     "node-fetch": "^3.3.2",
