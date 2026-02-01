@@ -39,7 +39,7 @@
     "pcm-volume": "^1.0.0"
   },
   "devDependencies": {
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "prettier": {
     "printWidth": 120,
