@@ -4,7 +4,6 @@ import path from 'node:path';
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
 import protoFiles from 'google-proto-files';
-import { OAuth2Client } from 'google-auth-library';
 
 const packageDefinition = protoLoader.loadSync(protoFiles.embeddedAssistant.v1alpha2, {
   includeDirs: [protoFiles.getProtoPath('..')],
@@ -67,11 +66,13 @@ export default class GoogleAssistant {
    * @return {Object}
    */
   _createClient(token) {
-    const oauth2Client = new OAuth2Client();
-    oauth2Client.setCredentials({ access_token: token });
-    const sslCreds = grpc.credentials.createSsl();
-    const callCreds = grpc.credentials.createFromGoogleCredential(oauth2Client);
-    const combinedCreds = grpc.credentials.combineChannelCredentials(sslCreds, callCreds);
+    const channelCreds = grpc.credentials.createSsl();
+    const callCreds = grpc.credentials.createFromMetadataGenerator((_params, callback) => {
+      const metadata = new grpc.Metadata();
+      metadata.add('authorization', `Bearer ${token}`);
+      callback(null, metadata);
+    });
+    const combinedCreds = grpc.credentials.combineChannelCredentials(channelCreds, callCreds);
     return new EmbeddedAssistant(GOOGLE_ASSISTANT_API_ENDPOINT, combinedCreds);
   }
 

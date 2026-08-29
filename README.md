@@ -9,8 +9,8 @@ Implementation of the Google Assistant API for Alexa
 
 # What's New in this release
 
-* Supports Node.js 22.x
-* Supports for ASK CLI deployment all-in-one skill and CloudFormation stack with optional local building using docker
+* Supports Node.js 24.x
+* Supports for ASK CLI deployment all-in-one skill and CloudFormation stack
 * Added support for device location converting Alexa skill device address to location coordinates using Google Maps Geocode API
 * Added localized skill translations for all supported languages between the Google Assistant and Alexa API
 * Replaced deprecated render template interface with simple cards display when text response available
@@ -22,9 +22,7 @@ Implementation of the Google Assistant API for Alexa
 
 0. Prerequisites
 
-    * To deploy this skill, you will need the following tools:
-        * [ASK CLI](https://developer.amazon.com/en-US/docs/alexa/smapi/quick-start-alexa-skills-kit-command-line-interface.html)
-        * [Docker](https://docs.docker.com/get-docker/) (Optional to build Lambda dependencies locally)
+    * To deploy this skill, you will need to install the latest [ASK CLI](https://developer.amazon.com/en-US/docs/alexa/smapi/quick-start-alexa-skills-kit-command-line-interface.html).
 
     * To determine your Google OAuth2 client authorized redirect URIs, add your [Alexa Vendor ID](https://developer.amazon.com/settings/console/mycid) to the links below:
         * `https://layla.amazon.com/api/skill/link/<vendorId>`

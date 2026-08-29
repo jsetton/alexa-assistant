@@ -22,24 +22,25 @@
     "prettier": "prettier --write *.js"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1097.0",
-    "@aws-sdk/lib-storage": "^3.1097.0",
-    "@aws-sdk/s3-request-presigner": "^3.1057.0",
-    "@flat/lame": "^1.2.8",
+    "@aws-sdk/client-dynamodb": "^3.1121.0",
+    "@aws-sdk/client-s3": "^3.1121.0",
+    "@aws-sdk/lib-dynamodb": "^3.1121.0",
+    "@aws-sdk/lib-storage": "^3.1121.0",
+    "@aws-sdk/s3-request-presigner": "^3.1121.0",
+    "@breezystack/lamejs": "^1.2.7",
     "@googlemaps/google-maps-services-js": "^3.4.2",
     "@grpc/grpc-js": "^1.14.4",
     "@grpc/proto-loader": "^0.8.1",
     "ask-sdk-core": "^2.14.0",
-    "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
     "ask-sdk-model": "^1.86.0",
-    "google-auth-library": "^10.9.1",
-    "google-proto-files": "^5.0.2",
-    "i18next": "^26.3.6",
-    "node-fetch": "^3.3.2",
-    "pcm-volume": "^1.0.0"
+    "google-proto-files": "^5.0.3",
+    "i18next": "^26.4.0"
   },
   "devDependencies": {
-    "prettier": "^3.8.3"
+    "prettier": "^3.9.6"
+  },
+  "allowScripts": {
+    "protobufjs@7.6.6": true
   },
   "prettier": {
     "printWidth": 120,

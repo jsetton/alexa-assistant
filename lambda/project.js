@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 // Get environment settings
 const GOOGLE_ASSISTANT_API_ENDPOINT = process.env.GOOGLE_ASSISTANT_API_ENDPOINT;
 const GOOGLE_PROJECT_ID = process.env.GOOGLE_PROJECT_ID;
@@ -11,27 +9,27 @@ const GOOGLE_PROJECT_ID = process.env.GOOGLE_PROJECT_ID;
  * @param  {Object} parameters
  * @return {Promise}
  */
-const handleRequest = (urn, token, parameters) => {
+const handleRequest = async (urn, token, parameters) => {
   const url = `https://${GOOGLE_ASSISTANT_API_ENDPOINT}/v1alpha2/projects/${GOOGLE_PROJECT_ID}/${urn}/`;
-  const options = {
+
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(parameters)
-  };
-  return fetch(url, options).then(async (response) => {
-    if (!response.ok) {
-      if (response.status === 409) {
-        console.log('Model already exists');
-      } else {
-        console.error(`Response code ${response.status} (${response.statusText})`);
-        const { error } = await response.json();
-        throw error;
-      }
-    }
   });
+
+  if (!response.ok) {
+    if (response.status === 409) {
+      console.log('Model already exists');
+    } else {
+      console.error(`Response code ${response.status} (${response.statusText})`);
+      const { error } = await response.json();
+      throw error;
+    }
+  }
 };
 
 /**

@@ -1,8 +1,8 @@
 import Alexa from 'ask-sdk-core';
-import { DynamoDbPersistenceAdapter } from 'ask-sdk-dynamodb-persistence-adapter';
 import GoogleAssistant from './assistant.js';
 import { getDeviceLocation } from './device.js';
 import { initLocalization } from './locale.js';
+import { DynamoDbPersistenceAdapter } from './persistence.js';
 import { register } from './project.js';
 import { uploadStreamFile } from './storage.js';
 import { encode } from './transcoder.js';
@@ -325,10 +325,10 @@ const persistenceAdapter = new DynamoDbPersistenceAdapter({
 });
 
 /**
- * Defines skill lambda handler
- * @type {Function}
+ * Defines alexa skill
+ * @type {Object}
  */
-export const handler = Alexa.SkillBuilders.custom()
+const skill = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
     SearchIntentHandler,
@@ -346,4 +346,12 @@ export const handler = Alexa.SkillBuilders.custom()
   .withApiClient(new Alexa.DefaultApiClient())
   .withPersistenceAdapter(persistenceAdapter)
   .withSkillId(process.env.SKILL_ID)
-  .lambda();
+  .create();
+
+/**
+ * Handles lambda event
+ * @param  {Object} event
+ * @param  {Object} context
+ * @return {Promise}
+ */
+export const handler = (event, context) => skill.invoke(event, context);
