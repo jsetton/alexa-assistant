@@ -33,7 +33,7 @@
     "@grpc/proto-loader": "^0.8.1",
     "ask-sdk-core": "^2.14.0",
     "ask-sdk-model": "^1.86.0",
-    "google-proto-files": "^5.0.3",
+    "google-proto-files": "^6.0.1",
     "i18next": "^26.4.0"
   },
   "devDependencies": {
