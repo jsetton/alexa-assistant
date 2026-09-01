@@ -4,6 +4,7 @@ import path from 'node:path';
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
 import protoFiles from 'google-proto-files';
+import { AlexaAssistantError } from './errors.js';
 
 const packageDefinition = protoLoader.loadSync(protoFiles.embeddedAssistant.v1alpha2, {
   includeDirs: [protoFiles.getProtoPath('..')],
@@ -140,9 +141,16 @@ export default class GoogleAssistant {
       // Set a timer to timeout after 9 seconds
       const timer = setTimeout(() => {
         if (!audioPresent) {
-          reject('error.assistant_timeout');
+          fail('error.assistant_timeout');
         }
       }, 9000);
+
+      // Handle errors and clean up resources
+      const fail = (code, cause) => {
+        clearTimeout(timer);
+        responseStream.destroy();
+        reject(new AlexaAssistantError(code, { cause }));
+      };
 
       responseStream.on('finish', () => {
         console.log('Write response pcm stream complete');
@@ -159,13 +167,13 @@ export default class GoogleAssistant {
         if (fileSizeInBytes > 0) {
           resolve([responseFile, responseText]);
         } else {
-          reject('error.assistant_audio');
+          fail('error.assistant_audio');
         }
       });
 
       responseStream.on('error', (error) => {
         console.error('Failed to write to response pcm stream:', error);
-        reject('error.assistant_stream');
+        fail('error.assistant_stream', error);
       });
 
       conversation.on('data', (response) => {
@@ -231,7 +239,7 @@ export default class GoogleAssistant {
 
       conversation.on('error', (error) => {
         console.error('Got a Google Assistant error:', error);
-        reject('error.assistant');
+        fail('error.assistant', error);
       });
 
       conversation.write(request);

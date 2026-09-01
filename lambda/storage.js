@@ -3,6 +3,7 @@ import { PassThrough } from 'node:stream';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { AlexaAssistantError } from './errors.js';
 
 const client = new S3Client({ region: process.env.AWS_REGION });
 
@@ -36,7 +37,7 @@ export const uploadStreamFile = async (streamFile, keyName) => {
     await upload.done();
   } catch (error) {
     console.error('S3 upload error:', error);
-    throw 'error.storage_upload';
+    throw new AlexaAssistantError('error.storage_upload', { cause: error });
   }
 
   // Get signed url from s3
@@ -51,6 +52,6 @@ export const uploadStreamFile = async (streamFile, keyName) => {
     return signedURL;
   } catch (error) {
     console.error('Got s3 get signed url error:', error);
-    throw 'error.storage_signed_url';
+    throw new AlexaAssistantError('error.storage_signed_url', { cause: error });
   }
 };

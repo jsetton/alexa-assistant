@@ -1,6 +1,7 @@
 import Alexa from 'ask-sdk-core';
 import GoogleAssistant from './assistant.js';
 import { getDeviceLocation } from './device.js';
+import { AlexaAssistantError } from './errors.js';
 import { initLocalization } from './locale.js';
 import { DynamoDbPersistenceAdapter } from './persistence.js';
 import { register } from './project.js';
@@ -101,11 +102,11 @@ const SearchIntentHandler = {
       }
     } catch (error) {
       let speechOutput;
-      if (error instanceof Error) {
+      if (error instanceof AlexaAssistantError) {
+        speechOutput = handlerInput.t(error.code);
+      } else {
         console.error(error);
         speechOutput = handlerInput.t('error.default');
-      } else {
-        speechOutput = handlerInput.t(error);
       }
       handlerInput.responseBuilder.speak(speechOutput);
     }
