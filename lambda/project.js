@@ -1,3 +1,5 @@
+import { AlexaAssistantError } from './errors.js';
+
 // Get environment settings
 const GOOGLE_ASSISTANT_API_ENDPOINT = process.env.GOOGLE_ASSISTANT_API_ENDPOINT;
 const GOOGLE_PROJECT_ID = process.env.GOOGLE_PROJECT_ID;
@@ -80,7 +82,7 @@ export const register = async (token) => {
     console.log('Got successful device model response');
   } catch (error) {
     console.error('Got model register error:', error);
-    throw 'error.project_device';
+    throw new AlexaAssistantError('error.project_device', { cause: error });
   }
   // Register instance
   try {
@@ -88,6 +90,6 @@ export const register = async (token) => {
     console.log('Got successful instance model response');
   } catch (error) {
     console.error('Got instance register error:', error);
-    throw 'error.project_instance';
+    throw new AlexaAssistantError('error.project_instance', { cause: error });
   }
 };

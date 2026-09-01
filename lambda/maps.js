@@ -1,4 +1,5 @@
 import { Client } from '@googlemaps/google-maps-services-js';
+import { AlexaAssistantError } from './errors.js';
 
 const client = new Client();
 
@@ -17,6 +18,6 @@ export const getGeoCoordinates = async (address) => {
     return { latitude, longitude };
   } catch (error) {
     console.error('Got google maps geocode error:', error);
-    throw 'error.maps_geocode';
+    throw new AlexaAssistantError('error.maps_geocode', { cause: error });
   }
 };

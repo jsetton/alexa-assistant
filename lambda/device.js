@@ -1,5 +1,5 @@
 import Alexa from 'ask-sdk-core';
-
+import { AlexaAssistantError } from './errors.js';
 import { getGeoCoordinates } from './maps.js';
 
 /**
@@ -14,10 +14,10 @@ const getDeviceAddress = async (handlerInput) => {
 
   try {
     return await deviceAddressServiceClient.getCountryAndPostalCode(deviceId);
-  } catch {
+  } catch (error) {
     console.error('Unable to get device address');
     handlerInput.responseBuilder.withAskForPermissionsConsentCard(permissions);
-    throw 'error.device_address';
+    throw new AlexaAssistantError('error.device_address', { cause: error });
   }
 };
 
