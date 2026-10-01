@@ -37,7 +37,7 @@
     "i18next": "^26.4.0"
   },
   "devDependencies": {
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.9"
   },
   "allowScripts": {
     "protobufjs@7.6.6": true
